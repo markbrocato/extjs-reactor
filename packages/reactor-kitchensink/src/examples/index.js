@@ -304,10 +304,10 @@ const root = {
                 { text: 'Basic Tabs', component: BasicTabs, navIcon: 'icon-basic-tabs' },
                 { text: 'Bottom Tabs', component: BottomTabs, navIcon: 'icon-bottom-tabs' },
                 { text: 'Icon Tabs', component: IconTabs, navIcon: 'icon-icon-tabs' },
-                { text: 'Desktop Tabs', component: DesktopTabs, navIcon: 'icon-desktop-tabs' },
-                { text: 'Closable', component: Closable, navIcon: 'icon-closable-tabs' },
-                { text: 'ScrollingTabs', component: ScrollingTabs, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-scrolling-tabs' },
-                { text: 'TabBar', component: TabBar, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-tabbar' }        
+                { text: 'Desktop Tabs', component: DesktopTabs, navIcon: 'icon-Desktop-Tabs' },
+                { text: 'Closable', component: Closable, navIcon: 'icon-Closable-Tabs' },
+                { text: 'ScrollingTabs', component: ScrollingTabs, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-Scrolling-Tabs' },
+                { text: 'TabBar', component: TabBar, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-Tab-Bar' }        
             ]},
             { text: 'TitleBar', component: TitleBar, navIcon: 'icon-Title-Bar' },
             { text: 'Toolbar', component: Toolbar, navIcon: 'icon-toolbar' },
@@ -424,7 +424,7 @@ const root = {
                 { text: 'Flexible Selection', component: FlexibleSelection, navIcon: 'icon-flexible-selection-grid' }
             ]},
             { text: 'PivotGrid', premium: true, component: PivotGrid, navIcon: 'icon-pivot-grids' },
-            { text: 'Redux Grid', component: ReduxGrid, navIcon: '.icon-Grids:-Redux-Grid' }
+            { text: 'Redux Grid', component: ReduxGrid, navIcon: '.icon-Redux-Grid' }
         ] },
         { text: 'Trees', navIcon: 'icon-trees', children: [
             { text: 'TreeList', component: TreeList, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-tree-list' },

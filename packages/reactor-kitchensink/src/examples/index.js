@@ -244,27 +244,27 @@ const root = {
             ]},
             { text: 'Draw', component: Draw, navIcon: 'icon-drawing' },
             { text: 'Forms', navIcon: 'icon-forms', children: [
-                { text: 'CheckBoxField', component: CheckBoxField, layout: 'center' },
-                { text: 'ComboBoxField', component: ComboBoxField, layout: 'center' },
-                { text: 'ContainerField', component: ContainerField, layout: Ext.os.is.Phone ? 'auto' : 'center' },
-                { text: 'DatePickerField', component: DatePickerField, layout: 'center' },
-                { text: 'EmailField', component: EmailField , layout: 'center'},
-                { text: 'FieldSet', component: FieldSet, layout: 'center' },
-                { text: 'FileField', component: FileField, layout: 'center' },
+                { text: 'CheckBoxField', component: CheckBoxField, layout: 'center', navIcon: 'icon-Forms-CheckBoxField'  },
+                { text: 'ComboBoxField', component: ComboBoxField, layout: 'center', navIcon: 'icon-Forms-ComboBoxField'  },
+                { text: 'ContainerField', component: ContainerField, layout: Ext.os.is.Phone ? 'auto' : 'center', navIcon: 'icon-Forms-ContainerField'  },
+                { text: 'DatePickerField', component: DatePickerField, layout: 'center', navIcon: 'icon-Forms-DatePickerField'  },
+                { text: 'EmailField', component: EmailField , layout: 'center', navIcon: 'icon-Forms-EmailField' },
+                { text: 'FieldSet', component: FieldSet, layout: 'center', navIcon: 'icon-Forms-FieldSet'  },
+                { text: 'FileField', component: FileField, layout: 'center', navIcon: 'icon-Forms-FileField'  },
                 { text: 'FormPanel', component: FormPanel, navIcon: 'icon-form-panel' },
-                { text: 'Gauge', component: Gauge, layout: 'center' },
-                { text: 'NumberField', component: NumberField, layout: 'center' },
-                { text: 'PasswordField', component: PasswordField, layout: 'center' },
-                { text: 'RadioField', component: RadioField, layout: 'center' },
+                { text: 'Gauge', component: Gauge, layout: 'center', navIcon: 'icon-Forms-Gauge' },
+                { text: 'NumberField', component: NumberField, layout: 'center', navIcon: 'icon-Forms-NumberField' },
+                { text: 'PasswordField', component: PasswordField, layout: 'center', navIcon: 'icon-Forms-PasswordField' },
+                { text: 'RadioField', component: RadioField, layout: 'center', navIcon: 'icon-Forms-RadioField' },
                 // { text: 'Picker', component: Picker, layout: 'center', navIcon: 'icon-picker' },
-                { text: 'SearchField', component: SearchField, layout: 'center' },
-                { text: 'SelectField', component: SelectField, layout: 'center' },
-                { text: 'SliderField', component: SliderField, layout: 'center' },
-                { text: 'SpinnerField', component: SpinnerField, layout: 'center' },
-                { text: 'TextAreaField', component: TextAreaField, layout: 'center' },
-                { text: 'TextField', component: TextField, layout: 'center' },
-                { text: 'ToggleField', component: ToggleField, layout: 'center' },
-                { text: 'URLField', component: URLField, layout: 'center' }
+                { text: 'SearchField', component: SearchField, layout: 'center', navIcon: 'icon-Forms-SearchField' },
+                { text: 'SelectField', component: SelectField, layout: 'center', navIcon: 'icon-Forms-SelectField' },
+                { text: 'SliderField', component: SliderField, layout: 'center', navIcon: 'icon-Forms-SliderField' },
+                { text: 'SpinnerField', component: SpinnerField, layout: 'center', navIcon: 'icon-Forms-SpinnerField' },
+                { text: 'TextAreaField', component: TextAreaField, layout: 'center', navIcon: 'icon-Forms-TextAreaField' },
+                { text: 'TextField', component: TextField, layout: 'center', navIcon: 'icon-Forms-TextField' },
+                { text: 'ToggleField', component: ToggleField, layout: 'center', navIcon: 'icon-Forms-ToggleField' },
+                { text: 'URLField', component: URLField, layout: 'center', navIcon: 'icon-Forms-URLField' }
             ] },
             { text: 'Layouts', navIcon: 'icon-layouts', children: [
                 { text: 'card', component: CardLayout, navIcon: 'icon-layout-card' },
@@ -298,7 +298,7 @@ const root = {
                 { text: 'Toast', component: Toast, layout: 'center', navIcon: 'icon-toast-view' }
             ]},
             { text: 'ProgressBar', component: ProgressBar, layout: 'center', navIcon: 'icon-progress-decorated' },
-            { text: 'Ripple', component: Ripple, layout: 'center', navIcon: 'icon-ripple' },
+            { text: 'Ripple', component: Ripple, layout: 'center', navIcon: 'icon-Ripple' },
             { text: 'Sheet', component: Sheet, layout: 'center', navIcon: 'icon-actionsheets' },
             { text: 'Tabs', navIcon: 'icon-tabs', children: [
                 { text: 'Basic Tabs', component: BasicTabs, navIcon: 'icon-basic-tabs' },
@@ -309,11 +309,11 @@ const root = {
                 { text: 'ScrollingTabs', component: ScrollingTabs, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-scrolling-tabs' },
                 { text: 'TabBar', component: TabBar, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-tabbar' }        
             ]},
-            { text: 'TitleBar', component: TitleBar, navIcon: 'icon-titlebar' },
+            { text: 'TitleBar', component: TitleBar, navIcon: 'icon-Title-Bar' },
             { text: 'Toolbar', component: Toolbar, navIcon: 'icon-toolbar' },
             { text: 'ToolTip', component: ToolTip, layout: 'center', navIcon: 'icon-tooltips'  },
             { text: 'Touch Events', component: TouchEvents, navIcon: 'icon-touch-events' },
-            { text: 'Transition', component: Transition, navIcon: 'icon-transition' }
+            { text: 'Transition', component: Transition, navIcon: 'icon-Transition' }
         ]},
         { text: 'Calendar', navIcon: 'icon-calendar', children:[
             { text: 'Calendar Panel', component: Calendar, navIcon: 'icon-calendar-panel' },
@@ -424,7 +424,7 @@ const root = {
                 { text: 'Flexible Selection', component: FlexibleSelection, navIcon: 'icon-flexible-selection-grid' }
             ]},
             { text: 'PivotGrid', premium: true, component: PivotGrid, navIcon: 'icon-pivot-grids' },
-            { text: 'Redux Grid', component: ReduxGrid }
+            { text: 'Redux Grid', component: ReduxGrid, navIcon: '.icon-Grids:-Redux-Grid' }
         ] },
         { text: 'Trees', navIcon: 'icon-trees', children: [
             { text: 'TreeList', component: TreeList, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-tree-list' },

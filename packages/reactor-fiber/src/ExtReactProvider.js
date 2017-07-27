@@ -108,6 +108,8 @@ const ExtJSRenderer = ReactFiberReconciler({
 
     appendChild,
 
+    appendChildToContainer: appendChild,
+
     appendInitialChild: appendChild,
 
     commitTextUpdate(textInstance, oldText, newText) {

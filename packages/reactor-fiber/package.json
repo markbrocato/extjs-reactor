@@ -31,8 +31,8 @@
     "url": "git+https://github.com/sencha/extjs-reactor.git"
   },
   "peerDependencies": {
-    "react": "^16.0.0-alpha.4",
-    "react-dom": "^16.0.0-alpha.4"
+    "react": "^16.0.0-beta.1",
+    "react-dom": "^16.0.0-beta.1"
   },
   "dependencies": {
     "fbjs": "^0.8.9"
@@ -46,9 +46,9 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.13.0",
     "jest": "^15.1.1",
-    "react": "^16.0.0-alpha.4",
+    "react": "^16.0.0-beta.1",
     "react-addons-test-utils": "^15.4.0",
-    "react-dom": "^16.0.0-alpha.4",
+    "react-dom": "^16.0.0-beta.1",
     "sinon": "^1.17.6",
     "typescript": "^2.2.0-dev.20161202"
   }

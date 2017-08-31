@@ -1,3 +1,8 @@
+/**
+ * This class forms the basis for all "reacitified" Ext JS components in both classic 
+ * and modern toolkits.  It implements React's private lifecycle methods to defer rendering 
+ * of the component to the underlying Ext JS component.
+ */
 import ReactDOM from 'react-dom'; // need to ensure ReactDOM is loaded before patching ReactComponentEnvironment.replaceNodeWithMarkup
 import ReactComponentEnvironment from 'react-dom/lib/ReactComponentEnvironment';
 import { Component, Children, cloneElement } from 'react';
@@ -181,6 +186,12 @@ export default class ExtJSComponent extends Component {
 
     // end react renderer methods
 
+    /**
+     * Renders an Ext JS component whose parent is an HTML element.
+     * @param {HTMLElement} renderToDOMNode The parent dom node
+     * @param {Object} config The Ext JS component config
+     * @return {Object} An object containing the renderered HTMLElement and a blank array of children
+     */
     _renderRootComponent(renderToDOMNode, config) {
         defaults(config, {
             height: '100%',
@@ -201,6 +212,14 @@ export default class ExtJSComponent extends Component {
         return { node: this.el, children: [] };
     }
 
+    /**
+     * Applies the values in the `defaults` prop to all children.  This allows
+     * us set props shared amongst children on the parent, reducing the amount
+     * of code that needs to be written and matching Ext JS developers expectations
+     * about the defaults config in Ext JS.
+     * @param {Object} defaults Map map of prop name to value
+     * @param {Object/Object[]} children Child components 
+     */
     _applyDefaults({ defaults, children }) {
         if (defaults) {
             return Children.map(children, child => {
@@ -217,6 +236,9 @@ export default class ExtJSComponent extends Component {
 
     /**
      * Creates an Ext JS component config from react element props
+     * @param {Element} element The react element to render
+     * @param {Object} transaction To be passed on to mountChildren
+     * @param {Object} context To be passed on to mountChildren
      * @private
      */
     _createInitialConfig(element, transaction, context) {
@@ -227,19 +249,24 @@ export default class ExtJSComponent extends Component {
         const items = [], dockedItems = [];
         
         if (props.children) {
+            // the component tree is renderered from the bottom up.
             const children = this.mountChildren(this._applyDefaults(props), transaction, context);
 
             for (let i=0; i<children.length; i++) {
                 const item = children[i];
 
                 if (item instanceof Ext.Base) {
+                    // determine if the child should be mapped to a config or a member of Container#items
                     const prop = this._propForChildElement(item);
 
                     if (prop) {
+                        // config
                         item.$reactorConfig = true;
                         const value = config;
 
                         if (prop.array) {
+                            // if the config is known to take an array (e.g. Window#buttons), push the item into
+                            // an array
                             let array = config[prop.name];
                             if (!array) array = config[prop.name] = [];
                             array.push(item);
@@ -247,9 +274,11 @@ export default class ExtJSComponent extends Component {
                             config[prop.name] = prop.value || item;
                         }
                     } else {
+                        // Container#items
                         (item.dock ? dockedItems : items).push(item);
                     }
                 } else if (item.node) {
+                    // wrap non-Ext JS children in an Ext Component instance so it can participate in the parent's layout
                     items.push(wrapDOMElement(item));
                 } else if (typeof item === 'string') {
                     // will get here when rendering html elements in react-test-renderer
@@ -299,6 +328,12 @@ export default class ExtJSComponent extends Component {
         }
     }
 
+    /**
+     * Returns a copy of the component's config with an xclass key added on to preserve the component's class.
+     * This is used for Ext configs that cannot accept an instantiated component and require a config object.
+     * @param {Ext.Base} item 
+     * @return {Object}
+     */
     _cloneConfig(item) {
         return { ...item.initialConfig, xclass: item.$className };
     }
@@ -318,8 +353,9 @@ export default class ExtJSComponent extends Component {
 
     /**
      * Creates an Ext config object for this specified props
-     * @param {Object} props
+     * @param {Object} props The react element's props
      * @param {Boolean} [includeEvents] true to convert on* props to listeners, false to exclude them
+     * @return {Object}
      * @private
      */
     _createConfig(props, includeEvents) {
@@ -335,10 +371,13 @@ export default class ExtJSComponent extends Component {
                 const eventName = this._eventNameForProp(key);
 
                 if (eventName) {
+                    // route event props to the listeners config
                     if (value && includeEvents) config.listeners[eventName] = value;
                 } else if (key === 'config') {
+                    // the config prop should be spread into the component's config
                     Object.assign(config, value);
                 } else if (key !== 'children' && key !== 'defaults') {
+                    // Preserve the React convention of using className to set CSS classes
                     config[key.replace(/className/, 'cls')] = value;
                 }
             }
@@ -347,6 +386,7 @@ export default class ExtJSComponent extends Component {
         const { extJSClass } = this;
 
         if (isAssignableFrom(extJSClass, CLASS_CACHE.Column) && typeof config.renderer === 'function' && CLASS_CACHE.RendererCell) {
+            // for convenience, automatically apply a renderer cell when a grid column has a renderer prop
             config.cell = config.cell || {};
             config.cell.xtype = 'renderercell';
         }
@@ -354,6 +394,10 @@ export default class ExtJSComponent extends Component {
         return config;
     }
 
+    /**
+     * Automatically add the responsive plugin to any config with a responsive key.
+     * @param {Object} config An Ext component config.
+     */
     _ensureResponsivePlugin(config) {
         if (config.responsiveConfig) {
             const { plugins } = config;
@@ -377,6 +421,7 @@ export default class ExtJSComponent extends Component {
      * component initialization.  One example of this is grid columns get $initParent added when the grid initializes.
      * @param {Object} props
      * @private
+     * @return {Object} a copy of the props.
      */
     _cloneProps(props) {
         return cloneDeepWith(props, value => {
@@ -386,6 +431,12 @@ export default class ExtJSComponent extends Component {
         })
     }
 
+    /**
+     * Usually changes to child items are applied before props.  In some cases certain props need to
+     * be applied before changing child items, such as changing an animation direction before swapping cards.
+     * @param {*} oldProps 
+     * @param {*} newProps 
+     */
     _rushProps(oldProps, newProps) {
         const rushConfigs = this.extJSClass.__reactorUpdateConfigsBeforeChildren;
         if (!rushConfigs) return;
@@ -473,9 +524,12 @@ export default class ExtJSComponent extends Component {
      * @private
      */
     _capitalize(str) {
-        return capitalize(str[0]) + str.slice(1);
+        return str[0].toUpperCase() + str.slice(1);
     }
 
+    /**
+     * Ensures that a node will be cached with React's internals once rendered.
+     */
     _precacheNode() {
         this._flags |= Flags.hasCachedChildNodes;
 
@@ -490,6 +544,10 @@ export default class ExtJSComponent extends Component {
         }
     }
 
+    /**
+     * Caches the generated html element and links the component instance to it so 
+     * we can access it later if that node is destroyed/moved.
+     */
     _doPrecacheNode() {
         this.el = this.cmp.el.dom;
         this.el._extCmp = this.cmp;
@@ -522,8 +580,8 @@ export default class ExtJSComponent extends Component {
     /**
      * Translates and index in props.children to an index within a config value that is an array.  Use
      * this to determine the position of an item in props.children within the array config to which it is mapped.
-     * @param {*} prop
-     * @param {*} indexInChildren
+     * @param {String} prop The name of the prop
+     * @param {Integer} indexInChildren The index of the value in the children prop array.
      */
     _toArrayConfigIndex(prop, indexInChildren) {
         let i=0, found=0;
@@ -577,6 +635,10 @@ export default class ExtJSComponent extends Component {
         this.cmp[setter](value);
     }
 
+    /**
+     * Determines if order can be ignored when processing children
+     * @return {Boolean}
+     */
     _ignoreChildrenOrder() {
         // maintaining order in certain components, like Transition's container, can cause problems with animations, _reactorIgnoreOrder gives us a way to opt out in such scenarios
         if (this.cmp._reactorIgnoreOrder) return true; 

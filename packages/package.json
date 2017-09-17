@@ -1,0 +1,19 @@
+{
+  "name": "@extjs/reactor-library-example",
+  "version": "1.1.1",
+  "description": "An example showing how to build a component library based on ExtReact",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sencha/extjs-reactor.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sencha/extjs-reactor/issues"
+  },
+  "homepage": "https://github.com/sencha/extjs-reactor#readme"
+}
